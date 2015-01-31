@@ -17,7 +17,7 @@ namespace Radio_Player
         private Button m_PlayOrStop;
         private Slider m_Slider;
         private Timer timer;
-        private static Mutex mut = new Mutex();
+        public  Mutex mut;
 
         public string RadioStation
         {

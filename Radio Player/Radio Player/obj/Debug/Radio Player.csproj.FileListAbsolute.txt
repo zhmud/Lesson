@@ -6,3 +6,11 @@ c:\users\женя\documents\visual studio 2013\Projects\C#\Radio Player\Radio Pl
 c:\users\женя\documents\visual studio 2013\Projects\C#\Radio Player\Radio Player\obj\Debug\Radio Player.pdb
 c:\users\женя\documents\visual studio 2013\Projects\C#\Radio Player\Radio Player\obj\Debug\Radio Player.csproj.ResolveComReference.cache
 c:\users\женя\documents\visual studio 2013\Projects\C#\Radio Player\Radio Player\obj\Debug\Interop.WMPLib.dll
+C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\bin\Debug\Radio Player.exe.config
+C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\obj\Debug\Interop.WMPLib.dll
+C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\obj\Debug\Radio Player.csproj.ResolveComReference.cache
+C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\obj\Debug\Radio Player.exe
+C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\obj\Debug\Radio Player.pdb
+C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\bin\Debug\Radio Player.exe
+C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\obj\Debug\Radio Player.csprojResolveAssemblyReference.cache
+C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\bin\Debug\Radio Player.pdb

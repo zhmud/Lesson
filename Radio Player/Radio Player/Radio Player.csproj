@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Button.cs" />
     <Compile Include="ConsoleMediaPlayer.cs" />
+    <Compile Include="Radio.cs" />
     <Compile Include="Slider.cs" />
     <Compile Include="Window.cs" />
     <Compile Include="Program.cs" />
