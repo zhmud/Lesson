@@ -61,7 +61,7 @@ namespace Radio_Player
             m_Singer = "";
             m_Song = "";
             m_WMP = new WindowsMediaPlayer();
-            m_WMP.URL = @"http://online-hitfm.tavrmedia.ua/HitFM_Live"; 
+            m_WMP.URL = @"http://online-hitfm.tavrmedia.ua/HitFM"; 
             m_PlayOrStop = new Button(Left + 1, Top + 1, (char)9608 + "");
             m_Slider = new Slider(Left + 16, Top + 4, 40, 30);
             m_WMP.settings.autoStart = true;

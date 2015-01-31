@@ -8,10 +8,10 @@ namespace Radio_Player
 {
     class Radio : Window
     {
-        string m_title;
-        string m_urlStream;
-        string m_wapPageAddress;
-        int m_status = 0; // 0 - normal, 1 - move, 2 - click
+        private string m_title;
+        private string m_urlStream;
+        private string m_wapPageAddress;
+        private int m_status = 0; // 0 - normal, 1 - move, 2 - click
 
         public string UrlStream
         {

@@ -44,6 +44,7 @@
     <Compile Include="Button.cs" />
     <Compile Include="ConsoleMediaPlayer.cs" />
     <Compile Include="Radio.cs" />
+    <Compile Include="RadioList.cs" />
     <Compile Include="Slider.cs" />
     <Compile Include="Window.cs" />
     <Compile Include="Program.cs" />
@@ -51,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="WMPLib">
