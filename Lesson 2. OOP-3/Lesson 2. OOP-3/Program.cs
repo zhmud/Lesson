@@ -10,31 +10,11 @@ namespace Lesson_2.OOP_3
     {
         static void Main(string[] args)
         {
-            double value;
-            value  = Convert.ToDouble(Console.ReadLine());
-            Console.WriteLine(CommonFactor(25,10));
-        }
-        static int CommonFactor(int first, int second)
-        {
-            int divisor;
-            if (first < second)
-                divisor = first;
-            else
-                divisor = second;
-            while (divisor > 0)
-            {
-                if ((first % divisor) == 0 && (second % divisor) == 0)
-                    return divisor;
-                divisor--;
-            }
-            return 1;
-        }
-        static int CounterDigit(double value)
-        {
-            int multiplier = 1;
-            for (int i = 0; (int)value != value; i++, multiplier *= 10)
-                value *= 10;
-            return multiplier;
+            Fraction one = new Fraction(4, 5);
+            Fraction two = new Fraction(2, 3);
+            Fraction rez = new Fraction();
+            rez = one - two;
+            rez.PrintMixedFraction();
         }
     }
 
@@ -60,6 +40,7 @@ namespace Lesson_2.OOP_3
             else
                 Console.WriteLine("Denominator != 0");
         }
+
         public static bool operator <(Fraction first, Fraction second)
         {
             if (first.ReturnValueInDouble() < second.ReturnValueInDouble())
@@ -81,6 +62,7 @@ namespace Lesson_2.OOP_3
             else
                 return false;
         }
+
         public static bool operator >(Fraction first, Fraction second)
         {
             if (first.ReturnValueInDouble() > second.ReturnValueInDouble())
@@ -102,6 +84,7 @@ namespace Lesson_2.OOP_3
             else
                 return false;
         }
+
         public static bool operator <=(Fraction first, Fraction second)
         {
             if (first.ReturnValueInDouble() <= second.ReturnValueInDouble())
@@ -123,6 +106,7 @@ namespace Lesson_2.OOP_3
             else
                 return false;
         }
+
         public static bool operator >=(Fraction first, Fraction second)
         {
             if (first.ReturnValueInDouble() >= second.ReturnValueInDouble())
@@ -144,6 +128,7 @@ namespace Lesson_2.OOP_3
             else
                 return false;
         }
+
         public static bool operator ==(Fraction first, Fraction second)
         {
             if (first.ReturnValueInDouble() == second.ReturnValueInDouble())
@@ -165,6 +150,7 @@ namespace Lesson_2.OOP_3
             else
                 return false;
         }
+
         public static bool operator !=(Fraction first, Fraction second)
         {
             if (first.ReturnValueInDouble() != second.ReturnValueInDouble())
@@ -186,12 +172,42 @@ namespace Lesson_2.OOP_3
             else
                 return false;
         }
+
         public static Fraction operator +(Fraction first, Fraction second)
         {
             Fraction result = new Fraction();
-            int divisor = result.CommonFactor(first.GetDenominator(), second.GetDenominator());            
+            result.m_Denominator = result.CommonFactor(first.GetDenominator(), second.GetDenominator());         
+            result.m_Numerator = first.m_Numerator * (result.m_Denominator / first.m_Denominator) + second.m_Numerator * (result.m_Denominator / second.m_Denominator);
+            result.Reduction();
             return result;
         }
+
+        public static Fraction operator -(Fraction first, Fraction second)
+        {
+            Fraction result = new Fraction();
+            result.m_Denominator = result.CommonFactor(first.GetDenominator(), second.GetDenominator());
+            result.m_Numerator = first.m_Numerator * (result.m_Denominator / first.m_Denominator) - second.m_Numerator * (result.m_Denominator / second.m_Denominator);
+            result.Reduction();
+            return result;
+        }
+
+        public static Fraction operator *(Fraction first, Fraction second)
+        {
+            Fraction result = new Fraction();
+            result.m_Denominator = first.m_Denominator * second.m_Denominator;
+            result.m_Numerator = first.m_Numerator * second.m_Numerator;
+            result.Reduction();
+            return result;
+        }
+        public static Fraction operator /(Fraction first, Fraction second)
+        {
+            Fraction result = new Fraction();
+            result.m_Denominator = first.m_Denominator * first.m_Numerator;
+            result.m_Numerator = first.m_Numerator * first.m_Denominator;
+            result.Reduction();
+            return result;
+        }
+
         public int GetDenominator()
         {
             return m_Denominator;
@@ -209,38 +225,52 @@ namespace Lesson_2.OOP_3
         {
             m_Numerator = value;
         }
+
         public void PrintMixedFraction()
         {
-            Console.WriteLine("{0} {1}//{2}", (int)(m_Numerator / m_Denominator), m_Numerator, m_Denominator);
+            int temp = (int)(m_Numerator / m_Denominator);
+            if (temp == 0)
+                Console.WriteLine("{0} {1}/{2}", 1, m_Numerator, m_Denominator);
+            else 
+                Console.WriteLine("{0} {1}/{2}", temp , m_Numerator % temp, m_Denominator);
         }
         public void PrintFraction()
         {
-            Console.WriteLine(m_Numerator / m_Denominator);
+            Console.WriteLine(m_Numerator + "/" + m_Denominator);
         }
         public double ReturnValueInDouble()
         {
-            return m_Numerator / m_Denominator;
+            return (double)m_Numerator / m_Denominator;
         }
+
         public void Reduction()
         {
-            int temp = CommonFactor(m_Numerator, m_Denominator);
-            m_Numerator /= temp;
-            m_Denominator /= temp;
+            int divisor;
+            if (m_Numerator < m_Denominator)
+                divisor = m_Denominator;
+            else
+                divisor = m_Numerator;
+            while (divisor > 0)
+            {
+                if ((m_Numerator % divisor) == 0 && (m_Denominator % divisor) == 0)
+                {
+                     m_Numerator /= divisor;
+                     m_Denominator /= divisor;
+                    return;
+                }
+                divisor--;
+            }
         }
         private int CommonFactor(int first, int second)
         {
-            int divisor;
-            if (first < second)
-                divisor = first;
-            else
-                divisor = second;
-            while (divisor > 0)
+            int divisor = 1;
+            while(true)
             {
-                if ((first % divisor) == 0 && (second % divisor) == 0)
+                if (divisor % first == 0 && divisor % second == 0)
                     return divisor;
-                divisor--;
+                else
+                    divisor++;
             }
-            return 1;
         }
         private int CounterDigit(double value)
         {
