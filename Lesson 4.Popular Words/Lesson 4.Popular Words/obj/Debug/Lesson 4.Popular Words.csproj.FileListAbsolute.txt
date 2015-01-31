@@ -1,0 +1,6 @@
+c:\users\женя\documents\visual studio 2013\Projects\C#\Lesson 4.Popular Words\Lesson 4.Popular Words\bin\Debug\Lesson 4.Popular Words.exe.config
+c:\users\женя\documents\visual studio 2013\Projects\C#\Lesson 4.Popular Words\Lesson 4.Popular Words\bin\Debug\Lesson 4.Popular Words.exe
+c:\users\женя\documents\visual studio 2013\Projects\C#\Lesson 4.Popular Words\Lesson 4.Popular Words\bin\Debug\Lesson 4.Popular Words.pdb
+c:\users\женя\documents\visual studio 2013\Projects\C#\Lesson 4.Popular Words\Lesson 4.Popular Words\obj\Debug\Lesson 4.Popular Words.csprojResolveAssemblyReference.cache
+c:\users\женя\documents\visual studio 2013\Projects\C#\Lesson 4.Popular Words\Lesson 4.Popular Words\obj\Debug\Lesson 4.Popular Words.exe
+c:\users\женя\documents\visual studio 2013\Projects\C#\Lesson 4.Popular Words\Lesson 4.Popular Words\obj\Debug\Lesson 4.Popular Words.pdb

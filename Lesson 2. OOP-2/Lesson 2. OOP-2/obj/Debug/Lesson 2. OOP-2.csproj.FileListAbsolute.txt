@@ -1,0 +1,5 @@
+c:\users\женя\documents\visual studio 2013\Projects\C#\Lesson 2. OOP-2\Lesson 2. OOP-2\bin\Debug\Lesson_2.OOP_2.exe.config
+c:\users\женя\documents\visual studio 2013\Projects\C#\Lesson 2. OOP-2\Lesson 2. OOP-2\bin\Debug\Lesson_2.OOP_2.exe
+c:\users\женя\documents\visual studio 2013\Projects\C#\Lesson 2. OOP-2\Lesson 2. OOP-2\bin\Debug\Lesson_2.OOP_2.pdb
+c:\users\женя\documents\visual studio 2013\Projects\C#\Lesson 2. OOP-2\Lesson 2. OOP-2\obj\Debug\Lesson_2.OOP_2.exe
+c:\users\женя\documents\visual studio 2013\Projects\C#\Lesson 2. OOP-2\Lesson 2. OOP-2\obj\Debug\Lesson_2.OOP_2.pdb

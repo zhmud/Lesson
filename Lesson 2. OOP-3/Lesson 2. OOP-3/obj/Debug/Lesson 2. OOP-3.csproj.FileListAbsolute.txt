@@ -1,0 +1,6 @@
+c:\users\женя\documents\visual studio 2013\Projects\C#\Lesson 2. OOP-3\Lesson 2. OOP-3\bin\Debug\Lesson_2.OOP_3.exe.config
+c:\users\женя\documents\visual studio 2013\Projects\C#\Lesson 2. OOP-3\Lesson 2. OOP-3\bin\Debug\Lesson_2.OOP_3.exe
+c:\users\женя\documents\visual studio 2013\Projects\C#\Lesson 2. OOP-3\Lesson 2. OOP-3\bin\Debug\Lesson_2.OOP_3.pdb
+c:\users\женя\documents\visual studio 2013\Projects\C#\Lesson 2. OOP-3\Lesson 2. OOP-3\obj\Debug\Lesson 2. OOP-3.csprojResolveAssemblyReference.cache
+c:\users\женя\documents\visual studio 2013\Projects\C#\Lesson 2. OOP-3\Lesson 2. OOP-3\obj\Debug\Lesson_2.OOP_3.exe
+c:\users\женя\documents\visual studio 2013\Projects\C#\Lesson 2. OOP-3\Lesson 2. OOP-3\obj\Debug\Lesson_2.OOP_3.pdb
