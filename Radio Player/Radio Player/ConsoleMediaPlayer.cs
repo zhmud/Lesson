@@ -12,12 +12,11 @@ namespace Radio_Player
         private string m_URL;
         private string m_Path;
         private int m_Volume;
-        private int cout = 0;
-        private WindowsMediaPlayer m_WMP;
+        public WindowsMediaPlayer m_WMP;
         private Button m_PlayOrStop;
         private Slider m_Slider;
         private Timer timer;
-        public  Mutex mut;
+        public  Mutex mut = new Mutex();
 
         public string RadioStation
         {
@@ -37,7 +36,9 @@ namespace Radio_Player
         public string URL
         {
             get { return m_URL; }
-            set { m_URL = value; }
+            set { m_URL = value;
+            m_WMP.URL = m_URL;
+            }
         }
         public string Path
         {
@@ -52,7 +53,6 @@ namespace Radio_Player
 
         public ConsoleMediaPlayer(int left, int top)
         {
-            cout++; 
             Left = left;
             Top = top;
             Width = 60;
@@ -97,14 +97,16 @@ namespace Radio_Player
             Console.SetCursorPosition(Left + 8, Top + 1);
             Console.Write("Радио станция : {0}", m_WMP.currentMedia.name);
         }
-        private void ShowStatus(object data)
+        private void ShowStatus(object e)
         {
             mut.WaitOne();
             Console.ForegroundColor = ConsoleColor.DarkYellow;
+            mut.WaitOne();
             Console.SetCursorPosition(Left + 8, Top + 3);
             Console.Write("                                                 ");
             Console.SetCursorPosition(Left + 8, Top + 3);
             Console.Write(m_WMP.status);
+            mut.ReleaseMutex();
             if (m_WMP.status == "Буферизация")
             {
                 m_WMP.controls.stop();
@@ -112,6 +114,7 @@ namespace Radio_Player
                 m_WMP.controls.play();
             }
             mut.ReleaseMutex();
+           
         }
 
         private void ShowMusic()

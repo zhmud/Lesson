@@ -13,6 +13,12 @@ namespace Radio_Player
         private string m_wapPageAddress;
         private int m_status = 0; // 0 - normal, 1 - move, 2 - click
 
+        public string Title
+        {
+            get { return m_title; }
+            set { m_title = value; }
+        }
+
         public string UrlStream
         {
             get { return m_urlStream; }
@@ -23,6 +29,11 @@ namespace Radio_Player
         {
             get { return m_wapPageAddress; }
             set { m_wapPageAddress = value; }
+        }
+        public int Status
+        {
+            get { return m_status; }
+            set { m_status = value; Show(ModeButton.Normal); }
         }
 
         public Radio()
@@ -45,13 +56,20 @@ namespace Radio_Player
         public void Show(ModeButton Mode = ModeButton.Normal)
         {
             if (Mode == ModeButton.Normal)
+            {
                 Console.ForegroundColor = ConsoleColor.White;
+                m_status = 0;
+            }
             else if (Mode == ModeButton.Move)
+            {
                 Console.ForegroundColor = ConsoleColor.Red;
+                m_status = 1;
+            }
             else if (Mode == ModeButton.Click)
             {
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
                 Console.BackgroundColor = ConsoleColor.Black;
+                m_status = 2;
             }
             WindowShow();
             int space = (20 - m_title.Length) / 2;
@@ -68,19 +86,16 @@ namespace Radio_Player
                 if (click == 1 && m_status != 2)
                 {
                     Show(ModeButton.Click);
-                    m_status = 2;
                     return true;
                 }
                 else if (m_status == 0)
                 {
                     Show(ModeButton.Move);
-                    m_status = 1;
                 }
             }
             else if (m_status == 1)
             {
                 Show(ModeButton.Normal);
-                m_status = 0;
             }
             return false;
         }
