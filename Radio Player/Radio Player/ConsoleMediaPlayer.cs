@@ -14,18 +14,11 @@ namespace Radio_Player
         private Button m_PlayOrStop;
         private Slider m_Slider;
         public volatile Mutex mut = new Mutex();
-        public volatile bool m_Invok = true;
 
         public string RadioStation
         {
             get { return m_RadioStation; }
             set { m_RadioStation = value; }
-        }
-
-        public bool Invok
-        {
-            get { return m_Invok; }
-            set { m_Invok = value; }
         }
 
         public string URL
@@ -88,9 +81,9 @@ namespace Radio_Player
             Console.SetCursorPosition(Left + 8, Top + 1);
             Console.Write("Радио станция : {0}", m_WMP.currentMedia.name);
         }
-        public volatile void ShowStatus()
+        public void ShowStatus()
         {
-            while (Invok)
+            while (true)
             {
                 Thread.Sleep(100);
                 mut.WaitOne(); 
@@ -117,10 +110,10 @@ namespace Radio_Player
             Console.Write("                                                  ");
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.SetCursorPosition(Left + 8, Top + 2);
-            //string rezult = "Музыка : " + singer + " - " + song;
-            //if (rezult.Length > 50)
-            //    rezult = rezult.Substring(0, 49);
-          //  Console.Write(rezult);
+            string rezult = "Музыка : " + singer + " - " + song;
+            if (rezult.Length > 50)
+                rezult = rezult.Substring(0, 48) + "...";
+            Console.Write(rezult);
             mut.ReleaseMutex();
         }
 
@@ -138,7 +131,6 @@ namespace Radio_Player
                 {
                     m_PlayOrStop.Caption = (char)9658 + "";
                     m_WMP.controls.stop();
-                    m_Invok = false;
                    // m_WMP.controls.pause();
                 }
                 else

@@ -20,6 +20,7 @@ namespace Radio_Player
         private string m_Url;
         private Timer timer;
         private VkApi vk;
+        private Thread download;
 
         public string Singer
         {
@@ -40,7 +41,8 @@ namespace Radio_Player
         public Song(string addres)
         {
             m_Address = addres;
-            Start();
+            download = new Thread(Start);
+            download.Start();
         }
 
         public void Start()
