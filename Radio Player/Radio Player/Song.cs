@@ -21,6 +21,7 @@ namespace Radio_Player
         private Timer timer;
         private VkApi vk;
         private Thread download;
+        public Mutex mut;
 
         public string Singer
         {
@@ -54,10 +55,10 @@ namespace Radio_Player
         public void Go(object obj)
         {
             if(Tavrmedia())
-            { 
-                if (NewSong != null)
-                    NewSong(m_Singer, m_Song);
+            {
                 SearchSong();
+                if (NewSong != null)
+                    NewSong(m_Singer, m_Song);             
             }
         }
 
@@ -75,8 +76,8 @@ namespace Radio_Player
         private void VkAuthorize()
         {
             int appId = 12345; // указываем id приложения
-            string email = "zhmud@ukrpost.net"; // email для авторизации
-            string password = "25121985zheka"; // пароль
+            string email = "+380931670003"; // email для авторизации
+            string password = "radioPlayer"; // пароль
             Settings settings = Settings.Audio; // уровень доступа к данным
             vk = new VkApi();
             vk.Authorize(appId, email, password, settings); // авторизуемся
@@ -85,18 +86,31 @@ namespace Radio_Player
         public void SearchSong()
         {
             int totalCount;
-            var audios = vk.Audio.Search(m_Singer + " " + m_Song, out totalCount, null, AudioSort.Popularity, true, 10);
-            foreach (var aud in audios)
+            string seachString = m_Singer + " " + m_Song;
+            for (int i = 0; i < 2; i++)
             {
-                Lyrics lyrics = vk.Audio.GetLyrics((long)aud.LyricsId);
-                if (lyrics.Text.Length > 300)
+                if (i == 1)
+                    seachString = m_Song;
+                Console.SetCursorPosition(0, i);
+                Console.WriteLine(seachString);
+                var audios = vk.Audio.Search(seachString, out totalCount, true, AudioSort.Popularity, true, 10);
+                foreach (var aud in audios)
                 {
-                    Console.SetCursorPosition(0, 20);
-                    Console.WriteLine("\nНайшло : " + aud.Artist + " - " + aud.Title + "\n");
-                    m_Url = aud.Url + "";
-                    Console.Write(lyrics.Text);
-                    Console.SetCursorPosition(0, 0);
-                    break;
+                    Lyrics lyrics = vk.Audio.GetLyrics((long)aud.LyricsId);
+                    if (lyrics.Text.Length > 300)
+                    {
+                        mut.WaitOne();
+                        Console.SetCursorPosition(0, 20);
+                        for (int j = 0; j < 100; j++)
+                            Console.Write("                                                                  ");
+                        Console.SetCursorPosition(0, 20);
+                        Console.WriteLine("\nНайшло : " + aud.Artist + " - " + aud.Title + "\n");
+                        m_Url = aud.Url + "";
+                        Console.Write(lyrics.Text);
+                        Console.SetCursorPosition(0, 0);
+                        mut.ReleaseMutex();
+                        return;
+                    }
                 }
             }
         }
@@ -174,7 +188,8 @@ namespace Radio_Player
             @"\u0401",@"\u041d",@"\u043d",@"\u044a",@"\u043a",
             @"\u044c",@"\u043b",@"\u043c",@"\u044f",@"\u043e",
             @"\u044b",@"\u041a",@"\u043f",@"\u044e",@"\u0456",
-            @"\u041c",@"\u0454",@"\u041b",@"\u041f",@"\u041e"};
+            @"\u041c",@"\u0454",@"\u041b",@"\u041f",@"\u041e",
+            @"\u042e"};
 
             string[] Ar2 = {
             "а","б","в","г","д","е","ж","з","и","й","к",
@@ -185,7 +200,7 @@ namespace Radio_Player
             "Ц","Ч","Ш","Щ","Ъ","Ы","Ь","Э","Ю","Я","Ё",
             "Н", "н", "ы", "к", "о", "л", "м", "я", "o",
             "ы", "К", "п", "ю", "i", "М", "е", "Л", "П",
-            "О"};
+            "О", "Ю"};
 
             for (int i = 0; i < Ar1.Length; i++)
                 str = str.Replace(Ar1[i], Ar2[i]);

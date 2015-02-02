@@ -15,6 +15,7 @@ namespace Radio_Player
             Console.OutputEncoding = System.Text.Encoding.Unicode;
             ConsoleMediaPlayer CMP = new ConsoleMediaPlayer(10, 2);
             Song s = new Song(@"http://o.tavrmedia.ua:9561/get/?k=kiss&callback=?");
+            s.mut = CMP.mut;
             Thread t = new Thread(CMP.ShowStatus);
             t.Start();
             s.NewSong += CMP.ShowMusic;

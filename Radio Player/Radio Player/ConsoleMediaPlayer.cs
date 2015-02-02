@@ -48,7 +48,7 @@ namespace Radio_Player
             m_RadioStation = "";
             m_WMP = new WindowsMediaPlayer();
             m_WMP.URL = @"http://online-kissfm.tavrmedia.ua/KissFM"; 
-            m_PlayOrStop = new Button(Left + 1, Top + 1, (char)9608 + "");
+            m_PlayOrStop = new Button(Left + 2, Top + 1, (char)9608 + "");
             m_Slider = new Slider(Left + 16, Top + 4, 40, 30);
             m_WMP.settings.autoStart = true;
             ShowVolue();
@@ -107,7 +107,7 @@ namespace Radio_Player
             mut.WaitOne();
             Thread.Sleep(100);
             Console.SetCursorPosition(Left + 8, Top + 2);
-            Console.Write("                                                  ");
+            Console.Write("                                                   ");
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.SetCursorPosition(Left + 8, Top + 2);
             string rezult = "Музыка : " + singer + " - " + song;
