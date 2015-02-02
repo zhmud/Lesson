@@ -13,13 +13,19 @@ namespace Radio_Player
         public WindowsMediaPlayer m_WMP;
         private Button m_PlayOrStop;
         private Slider m_Slider;
-        private Timer timer;
-        public  Mutex mut = new Mutex();
+        public volatile Mutex mut = new Mutex();
+        public volatile bool m_Invok = true;
 
         public string RadioStation
         {
             get { return m_RadioStation; }
             set { m_RadioStation = value; }
+        }
+
+        public bool Invok
+        {
+            get { return m_Invok; }
+            set { m_Invok = value; }
         }
 
         public string URL
@@ -52,7 +58,7 @@ namespace Radio_Player
             m_PlayOrStop = new Button(Left + 1, Top + 1, (char)9608 + "");
             m_Slider = new Slider(Left + 16, Top + 4, 40, 30);
             m_WMP.settings.autoStart = true;
-            ShowVolue();         
+            ShowVolue();
         }
 
         public void Show()
@@ -63,9 +69,7 @@ namespace Radio_Player
             m_Slider.Show();
             ShowVolue();
             ShowRadioStation();
-            ShowMusic();
-            timer = new Timer(ShowStatus, null, 0, 500);
-            
+            ShowMusic();         
             Console.ForegroundColor = ConsoleColor.White;
         }
 
@@ -84,24 +88,25 @@ namespace Radio_Player
             Console.SetCursorPosition(Left + 8, Top + 1);
             Console.Write("Радио станция : {0}", m_WMP.currentMedia.name);
         }
-        private void ShowStatus(object e)
+        public volatile void ShowStatus()
         {
-            mut.WaitOne();
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.SetCursorPosition(Left + 8, Top + 3);
-            Console.Write("                                                 ");
-            mut.ReleaseMutex();
-            mut.WaitOne();
-            Console.SetCursorPosition(Left + 8, Top + 3);
-            Thread.Sleep(100);
-            Console.Write(m_WMP.status);
-            if (m_WMP.status == "Буферизация")
+            while (Invok)
             {
-                m_WMP.controls.stop();
-                Thread.Sleep(500);
-                m_WMP.controls.play();
+                Thread.Sleep(100);
+                mut.WaitOne(); 
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.SetCursorPosition(Left + 8, Top + 3);
+                Console.Write("                                                 ");
+                Console.SetCursorPosition(Left + 8, Top + 3);
+                Console.Write(m_WMP.status);
+                if (m_WMP.status == "Буферизация")
+                {
+                    m_WMP.controls.stop();
+                    Thread.Sleep(500);
+                    m_WMP.controls.play();
+                }
+                mut.ReleaseMutex();
             }
-            mut.ReleaseMutex();   
         }
 
         public void ShowMusic(string singer = "", string song = "")
@@ -109,10 +114,13 @@ namespace Radio_Player
             mut.WaitOne();
             Thread.Sleep(100);
             Console.SetCursorPosition(Left + 8, Top + 2);
-            Console.Write("                                            ");
+            Console.Write("                                                  ");
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.SetCursorPosition(Left + 8, Top + 2);
-            Console.Write("Музыка : {0} - {1}", singer, song);
+            //string rezult = "Музыка : " + singer + " - " + song;
+            //if (rezult.Length > 50)
+            //    rezult = rezult.Substring(0, 49);
+          //  Console.Write(rezult);
             mut.ReleaseMutex();
         }
 
@@ -130,6 +138,7 @@ namespace Radio_Player
                 {
                     m_PlayOrStop.Caption = (char)9658 + "";
                     m_WMP.controls.stop();
+                    m_Invok = false;
                    // m_WMP.controls.pause();
                 }
                 else

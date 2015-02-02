@@ -40,13 +40,12 @@ namespace Radio_Player
         public Song(string addres)
         {
             m_Address = addres;
-            Thread myThead = new Thread(Start);
-            myThead.Start();
+            Start();
         }
 
         public void Start()
         {
-             VkAuthorize();
+            VkAuthorize();
             timer = new Timer(Go, null, 0, 1000);
         }
 
@@ -54,7 +53,6 @@ namespace Radio_Player
         {
             if(Tavrmedia())
             { 
-                Console.WriteLine(m_Song);
                 if (NewSong != null)
                     NewSong(m_Singer, m_Song);
                 SearchSong();
@@ -174,7 +172,7 @@ namespace Radio_Player
             @"\u0401",@"\u041d",@"\u043d",@"\u044a",@"\u043a",
             @"\u044c",@"\u043b",@"\u043c",@"\u044f",@"\u043e",
             @"\u044b",@"\u041a",@"\u043f",@"\u044e",@"\u0456",
-            @"\u041c",@"\u0454",@"\u041b",@"\u041f"};
+            @"\u041c",@"\u0454",@"\u041b",@"\u041f",@"\u041e"};
 
             string[] Ar2 = {
             "а","б","в","г","д","е","ж","з","и","й","к",
@@ -184,7 +182,8 @@ namespace Radio_Player
             "Л","М","Н","О","П","Р","С","Т","У","Ф","Х",
             "Ц","Ч","Ш","Щ","Ъ","Ы","Ь","Э","Ю","Я","Ё",
             "Н", "н", "ы", "к", "о", "л", "м", "я", "o",
-            "ы", "К", "п", "ю", "i", "М", "е", "Л", "П"};
+            "ы", "К", "п", "ю", "i", "М", "е", "Л", "П",
+            "О"};
 
             for (int i = 0; i < Ar1.Length; i++)
                 str = str.Replace(Ar1[i], Ar2[i]);

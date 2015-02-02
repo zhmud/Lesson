@@ -15,29 +15,27 @@ namespace Radio_Player
             Console.OutputEncoding = System.Text.Encoding.Unicode;
             ConsoleMediaPlayer CMP = new ConsoleMediaPlayer(10, 2);
             Song s = new Song(@"http://o.tavrmedia.ua:9561/get/?k=kiss&callback=?");
-            s.NewSong += CMP.ShowMusic;;
-            CMP.Show();
+            //Thread t = new Thread(CMP.ShowStatus);
+            //t.Start();
+            s.NewSong += CMP.ShowMusic;
             int X = 0;
             int Y = 0;
             while (true)
-            {
+            {              
                 int click = ReCord(ref X, ref Y);
                 CMP.mut.WaitOne();
                 CMP.Event(X, Y, click);
-                CMP.mut.ReleaseMutex();
-                CMP.mut.WaitOne();
                 int index = r.Event(X, Y, click);
                 if (index != -1)
                 {
                     CMP.m_WMP.controls.stop();
                     CMP.URL = r.GetRadio(index).UrlStream;
                     s.Address = r.GetRadio(index).WapPageAddress;
-                    CMP.mut.WaitOne();
                     CMP.Show();
-                    CMP.mut.ReleaseMutex();
                 }
                 CMP.mut.ReleaseMutex();
             }
+          //  t.Join();
         }
     }
 }
