@@ -40,9 +40,9 @@ namespace Radio_Player
 
         private void AnalysisFile()
         {
-            string[] separators = { "Radio", ";", "title = ", "urlStream = ", "wapPageAddress = ", "\r\n" };
+            string[] separators = { "#Radio", ";", "title = ", "urlStream = ", "wapPageAddress = ", "\r\n" };
             string[] radio = m_Text.Split(separators, StringSplitOptions.RemoveEmptyEntries);
-            m_Counter = radio.Length / 3;
+            m_Counter = (int)radio.Length / 3;
             m_Radio = new Radio[m_Counter];
             for(int i = 0; i < radio.Length; )
             {

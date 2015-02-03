@@ -34,5 +34,28 @@ namespace Radio_Player
                 CMP.mut.ReleaseMutex();
             }
         }
+
+        static public string GET_http(string url)
+        {
+            System.Net.ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
+            System.Net.WebRequest reqGET = System.Net.WebRequest.Create(url);
+            System.Net.WebResponse resp = reqGET.GetResponse();
+            System.IO.Stream stream = resp.GetResponseStream();
+            System.IO.StreamReader sr = new System.IO.StreamReader(stream);
+            string html = sr.ReadToEnd();
+            return html;
+        }
+
+        static string LuxFM()
+        {
+            string htmlpage = GET_http(@"http://lux.fm/player/onAir.do");
+            int indexof = htmlpage.IndexOf("id=\"song-name\">");
+            int lastof = htmlpage.IndexOf("</div>", indexof);
+            indexof += 16;
+            string namesong = htmlpage.Substring(indexof, lastof - indexof);
+            namesong = namesong.Replace(@"</a>", " ");
+            namesong = System.Text.RegularExpressions.Regex.Replace(namesong, @"\s+", " ");
+            return namesong;
+        }
     }
 }
