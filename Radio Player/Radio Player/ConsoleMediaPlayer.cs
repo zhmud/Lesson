@@ -7,8 +7,6 @@ namespace Radio_Player
     class ConsoleMediaPlayer: Window
     {
         private string m_RadioStation;
-        private string m_Singer;
-        private string m_Song;
         private string m_URL;
         private string m_Path;
         private int m_Volume;
@@ -23,16 +21,7 @@ namespace Radio_Player
             get { return m_RadioStation; }
             set { m_RadioStation = value; }
         }
-        public string Singer
-        {
-            get { return m_Singer; }
-            set { m_Singer = value; }
-        }
-        public string Song
-        {
-            get { return m_Song; }
-            set { m_Song = value; }
-        }
+
         public string URL
         {
             get { return m_URL; }
@@ -58,10 +47,8 @@ namespace Radio_Player
             Width = 60;
             Height = 6;
             m_RadioStation = "";
-            m_Singer = "";
-            m_Song = "";
             m_WMP = new WindowsMediaPlayer();
-            m_WMP.URL = @"http://online-hitfm.tavrmedia.ua/HitFM"; 
+            m_WMP.URL = @"http://online-kissfm.tavrmedia.ua/KissFM"; 
             m_PlayOrStop = new Button(Left + 1, Top + 1, (char)9608 + "");
             m_Slider = new Slider(Left + 16, Top + 4, 40, 30);
             m_WMP.settings.autoStart = true;
@@ -101,27 +88,32 @@ namespace Radio_Player
         {
             mut.WaitOne();
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            mut.WaitOne();
             Console.SetCursorPosition(Left + 8, Top + 3);
             Console.Write("                                                 ");
-            Console.SetCursorPosition(Left + 8, Top + 3);
-            Console.Write(m_WMP.status);
             mut.ReleaseMutex();
+            mut.WaitOne();
+            Console.SetCursorPosition(Left + 8, Top + 3);
+            Thread.Sleep(100);
+            Console.Write(m_WMP.status);
             if (m_WMP.status == "Буферизация")
             {
                 m_WMP.controls.stop();
                 Thread.Sleep(500);
                 m_WMP.controls.play();
             }
-            mut.ReleaseMutex();
-           
+            mut.ReleaseMutex();   
         }
 
-        private void ShowMusic()
+        public void ShowMusic(string singer = "", string song = "")
         {
+            mut.WaitOne();
+            Thread.Sleep(100);
+            Console.SetCursorPosition(Left + 8, Top + 2);
+            Console.Write("                                            ");
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.SetCursorPosition(Left + 8, Top + 2);
-            Console.Write("Музыка : {0} - {1}", m_Singer, m_Song);
+            Console.Write("Музыка : {0} - {1}", singer, song);
+            mut.ReleaseMutex();
         }
 
         public void Event(int x, int y, int click = 4)
