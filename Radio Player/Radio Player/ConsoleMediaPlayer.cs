@@ -13,7 +13,6 @@ namespace Radio_Player
         public WindowsMediaPlayer m_WMP;
         private Button m_PlayOrStop;
         private Slider m_Slider;
-        public volatile Mutex mut = new Mutex();
 
         public string RadioStation
         {
@@ -85,8 +84,8 @@ namespace Radio_Player
         {
             while (true)
             {
-                Thread.Sleep(100);
-                mut.WaitOne(); 
+                Thread.Sleep(150);
+                GlobalMutex.GetMutex.WaitOne();
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
                 Console.SetCursorPosition(Left + 8, Top + 3);
                 Console.Write("                                                 ");
@@ -98,13 +97,13 @@ namespace Radio_Player
                     Thread.Sleep(500);
                     m_WMP.controls.play();
                 }
-                mut.ReleaseMutex();
+                GlobalMutex.GetMutex.ReleaseMutex();
             }
         }
 
         public void ShowMusic(string singer = "", string song = "")
         {
-            mut.WaitOne();
+            GlobalMutex.GetMutex.WaitOne();
             Thread.Sleep(100);
             Console.SetCursorPosition(Left + 8, Top + 2);
             Console.Write("                                                   ");
@@ -114,12 +113,12 @@ namespace Radio_Player
             if (rezult.Length > 50)
                 rezult = rezult.Substring(0, 48) + "...";
             Console.Write(rezult);
-            mut.ReleaseMutex();
+            GlobalMutex.GetMutex.ReleaseMutex();
         }
 
         public void Event(int x, int y, int click = 4)
         {
-            mut.WaitOne();
+            GlobalMutex.GetMutex.WaitOne();
             if (m_Slider.Event(x, y, click))
             {
                 ShowVolue();
@@ -139,7 +138,7 @@ namespace Radio_Player
                     m_WMP.controls.play();
                 }
             }
-            mut.ReleaseMutex();
+            GlobalMutex.GetMutex.ReleaseMutex();
         }
 
     }

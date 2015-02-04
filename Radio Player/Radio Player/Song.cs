@@ -21,7 +21,6 @@ namespace Radio_Player
         private Timer timer;
         private VkApi vk;
         private Thread download;
-        public Mutex mut;
 
         public string Singer
         {
@@ -55,10 +54,10 @@ namespace Radio_Player
         public void Go(object obj)
         {
             if(Tavrmedia())
-            {
-                SearchSong();
+            {             
                 if (NewSong != null)
-                    NewSong(m_Singer, m_Song);             
+                    NewSong(m_Singer, m_Song); 
+                SearchSong();           
             }
         }
 
@@ -91,24 +90,22 @@ namespace Radio_Player
             {
                 if (i == 1)
                     seachString = m_Song;
-                Console.SetCursorPosition(0, i);
-                Console.WriteLine(seachString);
-                var audios = vk.Audio.Search(seachString, out totalCount, true, AudioSort.Popularity, true, 10);
+                var audios = vk.Audio.Search(seachString, out totalCount, true, AudioSort.Popularity, true, 20);
                 foreach (var aud in audios)
                 {
                     Lyrics lyrics = vk.Audio.GetLyrics((long)aud.LyricsId);
                     if (lyrics.Text.Length > 300)
                     {
-                        mut.WaitOne();
+                        GlobalMutex.GetMutex.WaitOne();
                         Console.SetCursorPosition(0, 20);
-                        for (int j = 0; j < 100; j++)
+                        for (int j = 0; j < 300; j++)
                             Console.Write("                                                                  ");
                         Console.SetCursorPosition(0, 20);
                         Console.WriteLine("\nНайшло : " + aud.Artist + " - " + aud.Title + "\n");
                         m_Url = aud.Url + "";
                         Console.Write(lyrics.Text);
                         Console.SetCursorPosition(0, 0);
-                        mut.ReleaseMutex();
+                        GlobalMutex.GetMutex.ReleaseMutex();
                         return;
                     }
                 }
@@ -189,7 +186,7 @@ namespace Radio_Player
             @"\u044c",@"\u043b",@"\u043c",@"\u044f",@"\u043e",
             @"\u044b",@"\u041a",@"\u043f",@"\u044e",@"\u0456",
             @"\u041c",@"\u0454",@"\u041b",@"\u041f",@"\u041e",
-            @"\u042e"};
+            @"\u042e",@"\u042f",@"\u042d"};
 
             string[] Ar2 = {
             "а","б","в","г","д","е","ж","з","и","й","к",
@@ -198,9 +195,9 @@ namespace Radio_Player
             "А","Б","В","Г","Д","Е","Ж","З","И","Й","К",
             "Л","М","Н","О","П","Р","С","Т","У","Ф","Х",
             "Ц","Ч","Ш","Щ","Ъ","Ы","Ь","Э","Ю","Я","Ё",
-            "Н", "н", "ы", "к", "о", "л", "м", "я", "o",
+            "Н", "н", "ы", "к", "ь", "л", "м", "я", "о",
             "ы", "К", "п", "ю", "i", "М", "е", "Л", "П",
-            "О", "Ю"};
+            "О", "Ю", "Я", "Э"};
 
             for (int i = 0; i < Ar1.Length; i++)
                 str = str.Replace(Ar1[i], Ar2[i]);

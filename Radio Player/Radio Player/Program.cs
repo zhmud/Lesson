@@ -10,12 +10,13 @@ namespace Radio_Player
         static extern int ReCord(ref int X, ref int Y);
         static void Main(string[] args)
         {
+            GlobalMutex mutex = GlobalMutex.CreateMutex();
+            
             RadioList r = new RadioList("RadioList.txt");
             Console.CursorVisible = false;
             Console.OutputEncoding = System.Text.Encoding.Unicode;
             ConsoleMediaPlayer CMP = new ConsoleMediaPlayer(10, 2);
             Song s = new Song(@"http://o.tavrmedia.ua:9561/get/?k=kiss&callback=?");
-            s.mut = CMP.mut;
             Thread t = new Thread(CMP.ShowStatus);
             t.Start();
             s.NewSong += CMP.ShowMusic;
@@ -25,7 +26,7 @@ namespace Radio_Player
             while (true)
             {              
                 int click = ReCord(ref X, ref Y);
-                CMP.mut.WaitOne();
+                GlobalMutex.GetMutex.WaitOne();
                 CMP.Event(X, Y, click);
                 int index = r.Event(X, Y, click);
                 if (index != -1)
@@ -35,7 +36,7 @@ namespace Radio_Player
                     s.Address = r.GetRadio(index).WapPageAddress;
                     CMP.Show();
                 }
-                CMP.mut.ReleaseMutex();
+                GlobalMutex.GetMutex.ReleaseMutex();
             }
         }
     }
