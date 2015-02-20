@@ -8,7 +8,7 @@ namespace Radio_Player
     {
         private string m_Path;
         private string m_Text;
-        private Radio[] m_Radio;
+        private RadioInfo[] m_Radio;
         private int m_Counter;
 
         public string Path
@@ -24,7 +24,7 @@ namespace Radio_Player
             AnalysisFile();
         }
 
-        public Radio GetRadio(int index)
+        public RadioInfo GetRadio(int index)
         {
             return m_Radio[index];
         }
@@ -43,16 +43,22 @@ namespace Radio_Player
             string[] separators = { "#Radio", ";", "title = ", "urlStream = ", "wapPageAddress = ", "\r\n" };
             string[] radio = m_Text.Split(separators, StringSplitOptions.RemoveEmptyEntries);
             m_Counter = (int)radio.Length / 3;
-            m_Radio = new Radio[m_Counter];
+            m_Radio = new RadioInfo[m_Counter];
             for(int i = 0; i < radio.Length; )
             {
                 int index = (int)i / 3;
-                m_Radio[index] = new Radio(9 + 21 * (index % 3), 10 + 3 * (index / 3));
+                m_Radio[index] = new RadioInfo(9 + 21 * (index % 3), 10 + 3 * (index / 3));
                 m_Radio[index].Title = radio[i]; i++;
                 m_Radio[index].UrlStream = radio[i]; i++;
                 m_Radio[index].WapPageAddress = radio[i]; i++;
                 m_Radio[index].Show();
             }
+        }
+
+        public void Updata()
+        {
+            for (int j = 0; j < m_Counter; j++)
+                m_Radio[j].Status = m_Radio[j].Status;
         }
 
         public int Event(int x, int y, int click = 4)

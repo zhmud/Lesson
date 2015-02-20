@@ -8,32 +8,66 @@ namespace Radio_Player
 {
     class Tab
     {
-        public delegate void Action();
-        public event Action Show; 
-
-        private string[] m_Title;
-        private int m_Counter;
-        private int m_number;
-
-        public void Add(string title)
-        {
-            m_Counter++;
-            m_Title[m_Counter] = title + (int)9474;
-        }
+        private string m_titles;
+        private int m_positionX;
+        private int m_status = 0;
 
         public Tab()
         {
-            m_Title = new string[8];
-            m_Counter = 0;
-            m_number = 0;
+            m_titles = "example";
+            m_positionX = 0;
+            Update();
         }
-
-        private void Separator()
+        public Tab(string title, int posX = 0)
         {
-            Console.SetCursorPosition(0, 1);
-            for (int i = 0; i < 80; i++)
-                Console.Write((int)9472);
+            m_titles = title;
+            m_positionX = posX;
+            Update();
         }
 
+        public int Status
+        {
+            get { return m_status; }
+            set { m_status = value; Update(ModeButton.Normal); }
+        }
+
+        public void Update(ModeButton mode = ModeButton.Normal)
+        {
+            Console.ForegroundColor = ConsoleColor.Black;         
+            if (mode == ModeButton.Normal)
+                Console.BackgroundColor = ConsoleColor.DarkYellow;
+            else if (mode == ModeButton.Move)
+                Console.BackgroundColor = ConsoleColor.DarkGray;
+            else
+                Console.BackgroundColor = ConsoleColor.DarkGreen;
+            Console.SetCursorPosition(m_positionX, 0);
+            Console.Write(" " + m_titles + " ");
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.BackgroundColor = ConsoleColor.Black;
+        }
+
+        public bool Event(int x, int y, int click = 4)
+        {
+            if (x >= m_positionX && x <= m_positionX + m_titles.Length + 1 && y < 1)
+            {
+                if (click == 1 && m_status != 2)
+                {
+                    Update(ModeButton.Click);
+                    m_status = 2;
+                    return true;
+                }
+                else if (m_status == 0)
+                {
+                    Update(ModeButton.Move);
+                    m_status = 1;
+                }
+            }
+            else if (m_status == 1)
+            {
+                Update(ModeButton.Normal);
+                m_status = 0;
+            }
+            return false;
+        }
     }
 }

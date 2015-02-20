@@ -12,6 +12,7 @@ namespace Radio_Player
         private int m_Top;       
         private int m_Length;
         private int m_Position;
+        private bool m_Mute;
         private bool m_pressed = false;
 
         public int Left
@@ -63,7 +64,22 @@ namespace Radio_Player
                     Console.Write((char)9608);
             }
             Console.Write((char)9508);
+            ShowMute(true);
         }
+        private void ShowMute(bool mode)
+        {
+            Console.SetCursorPosition(m_Left + m_Length + 2, m_Top);
+            string muteOff = (char)9608 + "" + (char)9668 + "";
+            string muteOn = "X" + (char)9668 + "";
+            if (mode)
+            {
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine(muteOn);
+            }
+            else
+                Console.WriteLine(muteOn);        
+        }
+        
         public bool Event(int x, int y, int click)
         {
             if (click == 3)

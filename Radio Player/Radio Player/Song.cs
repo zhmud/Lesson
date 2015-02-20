@@ -11,14 +11,13 @@ namespace Radio_Player
 {
     class Song
     {
-        public delegate void MethodContainer(string singer, string song);
+        public delegate void MethodContainer(string music);
         public event MethodContainer NewSong;
 
         private string m_Singer = "";
         private string m_Song = "";
         private string m_Address;
         private string m_Url;
-        private Timer timer;
         private VkApi vk;
         private Thread download;
 
@@ -32,32 +31,37 @@ namespace Radio_Player
             get { return m_Song; }
             set { m_Song = value; }
         }
-        public string Address
+        public void SetAddress(string Address)
         {
-            get { return m_Address; }
-            set { m_Address = value; }
+            m_Address = Address;
         }
 
         public Song(string addres)
         {
             m_Address = addres;
-            download = new Thread(Start);
+            download = new Thread(Go);
             download.Start();
         }
 
-        public void Start()
+        public void Go()
         {
             VkAuthorize();
-            timer = new Timer(Go, null, 0, 1000);
-        }
+            while (true)
+            {
+                bool ok = false;
+                if (m_Address == "http://lux.fm/player/onAir.do")
+                    ok = LuxFM();
+                else
+                    ok = Tavrmedia();
 
-        public void Go(object obj)
-        {
-            if(Tavrmedia())
-            {             
-                if (NewSong != null)
-                    NewSong(m_Singer, m_Song); 
-                SearchSong();           
+                if (ok)
+                {
+                    if (NewSong != null)
+                        NewSong(m_Singer + " - " + m_Song);
+                    try { SearchSong(); }
+                    catch (Exception) { m_Singer = "none"; }
+                }
+                Thread.Sleep(500);
             }
         }
 
@@ -97,10 +101,10 @@ namespace Radio_Player
                     if (lyrics.Text.Length > 300)
                     {
                         GlobalMutex.GetMutex.WaitOne();
-                        Console.SetCursorPosition(0, 20);
-                        for (int j = 0; j < 300; j++)
+                        Console.SetCursorPosition(0, 30);
+                        for (int j = 0; j < 200; j++)
                             Console.Write("                                                                  ");
-                        Console.SetCursorPosition(0, 20);
+                        Console.SetCursorPosition(0, 30);
                         Console.WriteLine("\nНайшло : " + aud.Artist + " - " + aud.Title + "\n");
                         m_Url = aud.Url + "";
                         Console.Write(lyrics.Text);
@@ -125,21 +129,45 @@ namespace Radio_Player
             Console.WriteLine("Загрузка завершина!!!");
         }
 
-        public string LuxFM()
+        public bool LuxFM()
         {
-            string htmlpage = GET_http(m_Address);
-            int indexof = htmlpage.IndexOf("id=\"song-name\">");
-            int lastof = htmlpage.IndexOf("</div>", indexof);
-            indexof += 16;
-            string namesong = htmlpage.Substring(indexof, lastof - indexof);
-            namesong = namesong.Replace(@"</a>", " ");
-            namesong = System.Text.RegularExpressions.Regex.Replace(namesong, @"\s+", " ");
-            return namesong;
+            string htmlpage;
+            try
+            {
+                htmlpage = GET_http(m_Address);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            string[] separator = { "id=\"song-name\">", "</div>", "</a>" };
+           // string[] separator = { "\"singer\":\"", "\",\"song_id\"", "\",\"song\":\"", "\r\n" };
+            int indexof = htmlpage.IndexOf(separator[0]);
+            int lastof = htmlpage.IndexOf(separator[1], indexof);
+            htmlpage = htmlpage.Substring(indexof, lastof - indexof); 
+            htmlpage = System.Text.RegularExpressions.Regex.Replace(htmlpage, @"\s+", " ");
+            htmlpage = Coding(htmlpage);
+            string[] namesong = htmlpage.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+            if (m_Singer != namesong[1] || m_Song != namesong[0])
+            {
+                m_Singer = namesong[1];
+                m_Song = namesong[0];
+                return true;
+            } 
+            return false;
         }
 
         public bool Tavrmedia()
         {
-            string htmlpage = GET_http(m_Address);
+            string htmlpage;
+            try
+            {
+                htmlpage = GET_http(m_Address);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
             string[] separators = { "\"singer\":\"", "\",\"song\":\"", "\",\"", "\r\n" };
             int indexof = htmlpage.IndexOf(separators[0]);
             int lastof = htmlpage.IndexOf(separators[2], indexof);
@@ -186,7 +214,7 @@ namespace Radio_Player
             @"\u044c",@"\u043b",@"\u043c",@"\u044f",@"\u043e",
             @"\u044b",@"\u041a",@"\u043f",@"\u044e",@"\u0456",
             @"\u041c",@"\u0454",@"\u041b",@"\u041f",@"\u041e",
-            @"\u042e",@"\u042f",@"\u042d"};
+            @"\u042e",@"\u042f",@"\u042d",@"\u044d" };
 
             string[] Ar2 = {
             "а","б","в","г","д","е","ж","з","и","й","к",
@@ -197,7 +225,7 @@ namespace Radio_Player
             "Ц","Ч","Ш","Щ","Ъ","Ы","Ь","Э","Ю","Я","Ё",
             "Н", "н", "ы", "к", "ь", "л", "м", "я", "о",
             "ы", "К", "п", "ю", "i", "М", "е", "Л", "П",
-            "О", "Ю", "Я", "Э"};
+            "О", "Ю", "Я", "Э", "э"};
 
             for (int i = 0; i < Ar1.Length; i++)
                 str = str.Replace(Ar1[i], Ar2[i]);
