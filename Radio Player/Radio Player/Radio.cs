@@ -26,14 +26,14 @@ namespace Radio_Player
         }
         public void StartShow()
         {
-            m_CMP.ShowOll = true;  
+            m_CMP.ShowAll = true;  
             m_CMP.Show();
             m_list.Updata();                   
         }
 
         public void StopShow()
         {
-            m_CMP.ShowOll = false; 
+            m_CMP.ShowAll = false; 
         }
 
         public bool Event(int x, int y, int click = 4)

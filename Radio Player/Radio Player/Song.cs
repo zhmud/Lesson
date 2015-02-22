@@ -14,23 +14,25 @@ namespace Radio_Player
         public delegate void MethodContainer(string music);
         public event MethodContainer NewSong;
 
+        private string[] m_title;
         private string m_Singer = "";
         private string m_Song = "";
         private string m_Address;
-        private string m_Url;
+        private string[] m_Url;
+        private int m_Number = 0;
         private VkApi vk;
         private Thread download;
+        private Lyrics[] m_lyric;
+        public int m_counter = 0;
+        public bool m_activ = false;
+        public Tab downloadTab;
 
-        public string Singer
+        public int Number
         {
-            get { return m_Singer; }
-            set { m_Singer = value; }
+            get { return m_Number; }
+            set { m_Number = value; }
         }
-        public string SongName
-        {
-            get { return m_Song; }
-            set { m_Song = value; }
-        }
+
         public void SetAddress(string Address)
         {
             m_Address = Address;
@@ -38,6 +40,9 @@ namespace Radio_Player
 
         public Song(string addres)
         {
+            m_lyric = new Lyrics[10];
+            m_title = new string[10];
+            m_Url = new string[10];
             m_Address = addres;
             download = new Thread(Go);
             download.Start();
@@ -90,43 +95,71 @@ namespace Radio_Player
         {
             int totalCount;
             string seachString = m_Singer + " " + m_Song;
-            for (int i = 0; i < 2; i++)
+            var audios = vk.Audio.Search(seachString, out totalCount, true, AudioSort.Popularity, true, 10);
+            m_counter = audios.Count;
+            for (int i = 0; i < audios.Count; i++)
+            {             
+                m_lyric[i] = vk.Audio.GetLyrics((long)audios[i].LyricsId);
+                m_title[i] = audios[i].Artist + " - " + audios[i].Title;
+                m_Url[i] = audios[i].Url + ""; //ссылка для скачивания
+            }
+            for (int i = 0; i < m_lyric.Length; i++)
             {
-                if (i == 1)
-                    seachString = m_Song;
-                var audios = vk.Audio.Search(seachString, out totalCount, true, AudioSort.Popularity, true, 20);
-                foreach (var aud in audios)
+                if (m_lyric[i].Text.Length > 300)
                 {
-                    Lyrics lyrics = vk.Audio.GetLyrics((long)aud.LyricsId);
-                    if (lyrics.Text.Length > 300)
-                    {
-                        GlobalMutex.GetMutex.WaitOne();
-                        Console.SetCursorPosition(0, 30);
-                        for (int j = 0; j < 200; j++)
-                            Console.Write("                                                                  ");
-                        Console.SetCursorPosition(0, 30);
-                        Console.WriteLine("\nНайшло : " + aud.Artist + " - " + aud.Title + "\n");
-                        m_Url = aud.Url + "";
-                        Console.Write(lyrics.Text);
-                        Console.SetCursorPosition(0, 0);
-                        GlobalMutex.GetMutex.ReleaseMutex();
-                        return;
-                    }
+                    m_Number = i;
+                    break;
                 }
             }
+            Print();
+        }
+
+        public void Print()
+        {
+            if (m_counter > 0 && m_activ && m_Number < m_counter)
+            {
+                Clear();              
+                int space = (64 - m_title[m_Number].Length) / 2;
+                if (m_title[m_Number].Length > 64)
+                    space = 0;
+                Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                Console.SetCursorPosition(8 + space, 3);
+                if (m_title[m_Number].Length > 64)
+                    Console.Write(m_title[m_Number].Substring(0, 61) + "...");
+                else
+                    Console.Write(m_title[m_Number]);
+
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.SetCursorPosition(0, 6);
+                Console.Write(m_lyric[m_Number].Text);
+                Console.SetCursorPosition(0, 0);
+            }
+        }
+        private void Clear()
+        {
+            GlobalMutex.GetMutex.WaitOne();
+            Console.SetCursorPosition(8, 3);
+            Console.Write("                                                                ");
+            Console.SetCursorPosition(0, 6);
+            for (int i = 0; i < 300; i++)
+                Console.Write("                                                            ");
+            GlobalMutex.GetMutex.ReleaseMutex();
         }
 
         public void DownloadSong()
         {
             WebClient webClient = new WebClient();
-            webClient.DownloadFileAsync(new Uri(m_Url), m_Singer + " - " + m_Song + ".mp3");
-            webClient.DownloadDataCompleted += webClient_DownloadDataCompleted;
+            webClient.DownloadFileAsync(new Uri(m_Url[m_Number]), "Музыка/" + m_Singer + " - " + m_Song + ".mp3");
+            webClient.DownloadFileCompleted += webClient_DownloadFileCompleted;
         }
 
-        void webClient_DownloadDataCompleted(object sender, DownloadDataCompletedEventArgs e)
+        public void webClient_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
-            Console.SetCursorPosition(0, 0);
-            Console.WriteLine("Загрузка завершина!!!");
+            if (downloadTab != null)
+            {
+                downloadTab.Status = 0;
+                downloadTab.Update(0);
+            }
         }
 
         public bool LuxFM()

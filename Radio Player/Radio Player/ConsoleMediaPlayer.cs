@@ -6,7 +6,7 @@ namespace Radio_Player
 {
     class ConsoleMediaPlayer: Window
     {
-        private bool m_ShowOll;
+        private bool m_ShowAll;
         private string m_URL;
         private string m_song;
         private int m_Volume;
@@ -22,10 +22,10 @@ namespace Radio_Player
             m_WMP.URL = m_URL;
             }
         }
-        public bool ShowOll
+        public bool ShowAll
         {
-            get { return m_ShowOll; }
-            set { m_ShowOll = value; }
+            get { return m_ShowAll; }
+            set { m_ShowAll = value; }
         }
 
         public ConsoleMediaPlayer(int left, int top)
@@ -35,7 +35,7 @@ namespace Radio_Player
             Width = 62;
             Height = 6;
             m_song = "";
-            m_ShowOll = true;
+            m_ShowAll = true;
 
             m_WMP = new WindowsMediaPlayer();
             m_WMP.URL = @"http://online-kissfm.tavrmedia.ua/KissFM";
@@ -80,7 +80,7 @@ namespace Radio_Player
             while (true)
             {
                 Thread.Sleep(500);
-                if (ShowOll)
+                if (ShowAll)
                 {                  
                     GlobalMutex.GetMutex.WaitOne();
                     try
@@ -111,7 +111,7 @@ namespace Radio_Player
         {
                 GlobalMutex.GetMutex.WaitOne();
                 Thread.Sleep(100);
-                if (ShowOll)
+                if (ShowAll)
                 {
                     Console.SetCursorPosition(Left + 8, Top + 2);
                     Console.ForegroundColor = ConsoleColor.DarkYellow;
@@ -130,7 +130,7 @@ namespace Radio_Player
                         i = 0;
                         Thread.Sleep(1000);
                     }
-                if (m_ShowOll)
+                if (m_ShowAll)
                 {
                     
                     GlobalMutex.GetMutex.WaitOne();
@@ -138,9 +138,9 @@ namespace Radio_Player
                     Console.Write("                                           ");
                     Console.SetCursorPosition(Left + 17, Top + 2);
                     Console.ForegroundColor = ConsoleColor.DarkYellow;
-                    if (m_song.Length > 42 && m_ShowOll)
+                    if (m_song.Length > 42 && m_ShowAll)
                         Console.WriteLine(m_song.Substring(i, 43));
-                    else if (m_ShowOll)
+                    else if (m_ShowAll)
                         Console.WriteLine(m_song);
                     GlobalMutex.GetMutex.ReleaseMutex();
                     if (i == 0)

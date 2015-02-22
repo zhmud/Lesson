@@ -71,7 +71,6 @@ namespace Radio_Player
 			    }
 			    Console.WriteLine();
 		    }
-            Console.SetCursorPosition(m_Left + 10, m_Top + 10);
 		    return true;
         }
     }

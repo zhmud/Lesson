@@ -14,19 +14,24 @@ namespace Radio_Player
         {
             Tab RadioTab = new Tab("Радио", 0);
             Tab TextTab = new Tab("Текст", 8);
-            Tab ListTab = new Tab("Скаченные песни", 16);
+            Tab ListTab = new Tab("Скачанные песни", 16);
             MouseEvent += RadioTab.Event;
             MouseEvent += TextTab.Event;
             MouseEvent += ListTab.Event;
 
+            Tab Download = new Tab("Скачать", 71);
+            MouseEvent += Download.Event; ;
+            
+
             Console.SetWindowSize(80, 50);
             GlobalMutex mutex = GlobalMutex.CreateMutex();
             Console.CursorVisible = false;
-            
+
+            TextList textlist = new TextList();
             Radio radio = new Radio();
-            Song s = new Song(@"http://o.tavrmedia.ua:9561/get/?k=kiss&callback=?");
-            s.NewSong += radio.m_CMP.ShowMusic;
-            radio.NewAddress += s.SetAddress;
+            textlist.m_Song.NewSong += radio.m_CMP.ShowMusic;
+            radio.NewAddress += textlist.m_Song.SetAddress;
+            textlist.m_Song.downloadTab = Download;
             
             int status = -1;
             int X = 0;
@@ -45,6 +50,7 @@ namespace Radio_Player
                         firstRun = false;
                         RadioTab.Status = 2;
                     }
+                    textlist.StopShow();
                     Console.Clear();
                     
                     status = 0;
@@ -53,10 +59,12 @@ namespace Radio_Player
                     
                     radio.StartShow();
                     MouseEvent += radio.Event;
+                    MouseEvent -= textlist.Event;
 
                     TextTab.Update((ModeButton)TextTab.Status);
                     RadioTab.Update((ModeButton)RadioTab.Status);
                     ListTab.Update((ModeButton)ListTab.Status);
+                    Download.Update((ModeButton)Download.Status);
 
                 }
                 else if (TextTab.Status == 2 && status != 1)
@@ -68,16 +76,19 @@ namespace Radio_Player
                     RadioTab.Status = 0;
                     ListTab.Status = 0;
 
+                    textlist.Updata();
+                    MouseEvent += textlist.Event;
                     MouseEvent -= radio.Event;
 
                     TextTab.Update((ModeButton)TextTab.Status);
                     RadioTab.Update((ModeButton)RadioTab.Status);
                     ListTab.Update((ModeButton)ListTab.Status);
-                    
+                    Download.Update((ModeButton)Download.Status);                  
                 }
                 else if (ListTab.Status == 2 && status != 2)
                 {
                     radio.StopShow();
+                    textlist.StopShow();
                     Console.Clear();
 
                     status = 2;
@@ -85,10 +96,22 @@ namespace Radio_Player
                     RadioTab.Status = 0;
 
                     MouseEvent -= radio.Event;
+                    MouseEvent -= textlist.Event;
 
                     TextTab.Update((ModeButton)TextTab.Status);
                     RadioTab.Update((ModeButton)RadioTab.Status);
                     ListTab.Update((ModeButton)ListTab.Status);
+                    Download.Update((ModeButton)Download.Status);
+                }
+                if (Download.Status == 2)
+                {
+                    if (textlist.m_Song.m_counter > 0)
+                        textlist.m_Song.DownloadSong();
+                    else
+                    {
+                        Download.Status = 0;
+                        Download.Update(0);
+                    }
                 }
                 GlobalMutex.GetMutex.ReleaseMutex();
             }
