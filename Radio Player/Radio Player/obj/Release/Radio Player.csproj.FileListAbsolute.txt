@@ -1,0 +1,16 @@
+C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\bin\Release\Radio Player.exe.config
+C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\obj\Release\Interop.WMPLib.dll
+C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\obj\Release\Radio Player.csproj.ResolveComReference.cache
+C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\bin\Release\Radio Player.exe
+C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\bin\Release\Radio Player.pdb
+C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\bin\Release\HtmlAgilityPack.dll
+C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\bin\Release\Newtonsoft.Json.dll
+C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\bin\Release\VkNet.dll
+C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\bin\Release\HtmlAgilityPack.pdb
+C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\bin\Release\HtmlAgilityPack.xml
+C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\bin\Release\Newtonsoft.Json.xml
+C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\bin\Release\VkNet.pdb
+C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\bin\Release\VkNet.xml
+C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\obj\Release\Radio Player.csprojResolveAssemblyReference.cache
+C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\obj\Release\Radio Player.exe
+C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\obj\Release\Radio Player.pdb

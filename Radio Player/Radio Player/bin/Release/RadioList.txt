@@ -1,0 +1,107 @@
+#Radio
+title = Радио Люкс;
+urlStream = http://icecast.luxnet.ua/lux;
+wapPageAddress = http://lux.fm/player/onAir.do;
+
+#Radio
+title = ХИТ FM;
+urlStream = http://online-hitfm.tavrmedia.ua/HitFM;
+wapPageAddress = http://o.tavrmedia.ua:9561/get/?k=hit&callback=?;
+
+#Radio
+title = Kiss FM;
+urlStream = http://online-kissfm.tavrmedia.ua/KissFM;
+wapPageAddress = http://o.tavrmedia.ua:9561/get/?k=kiss&callback=?;
+
+#Radio
+title = РУССКОЕ РАДИО;
+urlStream = http://online-rusradio.tavrmedia.ua/RusRadio;
+wapPageAddress = http://o.tavrmedia.ua:9561/get/?k=russ&callback=?;
+
+#Radio
+title = Relax FM;
+urlStream = http://online-radiorelax.tavrmedia.ua/RadioRelax;
+wapPageAddress = http://o.tavrmedia.ua:9561/get/?k=relax&callback=?;
+
+#Radio
+title = Радио Мелодия;
+urlStream = http://online-radiomelodia.tavrmedia.ua/RadioMelodia;
+wapPageAddress = http://o.tavrmedia.ua:9561/get/?k=melodia&callback=?;
+
+#Radio
+title = Radio ROKS ;
+urlStream = http://online-radioroks.tavrmedia.ua/RadioROKS;
+wapPageAddress = http://o.tavrmedia.ua:9561/get/?k=roks&callback=?;
+
+#Radio
+title = Радио Люкс;
+urlStream = http://icecast.luxnet.ua/lux;
+wapPageAddress = http://lux.fm/player/onAir.do;
+
+#Radio
+title = ХИТ FM;
+urlStream = http://online-hitfm.tavrmedia.ua/HitFM;
+wapPageAddress = http://o.tavrmedia.ua:9561/get/?k=hit&callback=?;
+
+#Radio
+title = Kiss FM;
+urlStream = http://online-kissfm.tavrmedia.ua/KissFM;
+wapPageAddress = http://o.tavrmedia.ua:9561/get/?k=kiss&callback=?;
+
+#Radio
+title = РУССКОЕ РАДИО;
+urlStream = http://online-rusradio.tavrmedia.ua/RusRadio;
+wapPageAddress = http://o.tavrmedia.ua:9561/get/?k=russ&callback=?;
+
+#Radio
+title = Relax FM;
+urlStream = http://online-radiorelax.tavrmedia.ua/RadioRelax;
+wapPageAddress = http://o.tavrmedia.ua:9561/get/?k=relax&callback=?;
+
+#Radio
+title = Радио Мелодия;
+urlStream = http://online-radiomelodia.tavrmedia.ua/RadioMelodia;
+wapPageAddress = http://o.tavrmedia.ua:9561/get/?k=melodia&callback=?;
+
+#Radio
+title = Radio ROKS ;
+urlStream = http://online-radioroks.tavrmedia.ua/RadioROKS;
+wapPageAddress = http://o.tavrmedia.ua:9561/get/?k=roks&callback=?;
+
+#Radio
+title = Радио Люкс;
+urlStream = http://icecast.luxnet.ua/lux;
+wapPageAddress = http://lux.fm/player/onAir.do;
+
+#Radio
+title = ХИТ FM;
+urlStream = http://online-hitfm.tavrmedia.ua/HitFM;
+wapPageAddress = http://o.tavrmedia.ua:9561/get/?k=hit&callback=?;
+
+#Radio
+title = Kiss FM;
+urlStream = http://online-kissfm.tavrmedia.ua/KissFM;
+wapPageAddress = http://o.tavrmedia.ua:9561/get/?k=kiss&callback=?;
+
+#Radio
+title = РУССКОЕ РАДИО;
+urlStream = http://online-rusradio.tavrmedia.ua/RusRadio;
+wapPageAddress = http://o.tavrmedia.ua:9561/get/?k=russ&callback=?;
+
+#Radio
+title = Relax FM;
+urlStream = http://online-radiorelax.tavrmedia.ua/RadioRelax;
+wapPageAddress = http://o.tavrmedia.ua:9561/get/?k=relax&callback=?;
+
+#Radio
+title = Радио Мелодия;
+urlStream = http://online-radiomelodia.tavrmedia.ua/RadioMelodia;
+wapPageAddress = http://o.tavrmedia.ua:9561/get/?k=melodia&callback=?;
+
+#Radio
+title = Radio ROKS ;
+urlStream = http://online-radioroks.tavrmedia.ua/RadioROKS;
+wapPageAddress = http://o.tavrmedia.ua:9561/get/?k=roks&callback=?;
+
+
+
