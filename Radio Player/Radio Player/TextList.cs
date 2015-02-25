@@ -10,8 +10,7 @@ namespace Radio_Player
     {
         private Button m_Next;
         private Button m_Back;
-        public Song m_Song;
-        
+        public Song m_Song;      
 
         public TextList()
         {
@@ -48,7 +47,6 @@ namespace Radio_Player
                
             return true;
         }
-
 
     }
 }

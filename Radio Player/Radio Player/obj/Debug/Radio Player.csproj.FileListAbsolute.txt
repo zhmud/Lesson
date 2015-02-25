@@ -12,5 +12,15 @@ C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\obj\Debug\Ra
 C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\obj\Debug\Radio Player.exe
 C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\obj\Debug\Radio Player.pdb
 C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\bin\Debug\Radio Player.exe
-C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\obj\Debug\Radio Player.csprojResolveAssemblyReference.cache
 C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\bin\Debug\Radio Player.pdb
+C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\bin\Debug\HtmlAgilityPack.dll
+C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\bin\Debug\VkNet.dll
+C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\bin\Debug\HtmlAgilityPack.pdb
+C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\bin\Debug\HtmlAgilityPack.xml
+C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\bin\Debug\VkNet.pdb
+C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\bin\Debug\VkNet.xml
+C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\obj\Debug\Radio Player.csprojResolveAssemblyReference.cache
+C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\bin\Debug\Radio Player.exe.CodeAnalysisLog.xml
+C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\bin\Debug\Radio Player.exe.lastcodeanalysissucceeded
