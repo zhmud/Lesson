@@ -22,5 +22,4 @@ C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\bin\Debug\Ne
 C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\bin\Debug\VkNet.pdb
 C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\bin\Debug\VkNet.xml
 C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\obj\Debug\Radio Player.csprojResolveAssemblyReference.cache
-C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\bin\Debug\Radio Player.exe.CodeAnalysisLog.xml
-C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\bin\Debug\Radio Player.exe.lastcodeanalysissucceeded
+C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\bin\Debug\Bass.Net.dll

@@ -8,7 +8,7 @@ namespace Radio_Player
 {
     class Radio
     {
-        public delegate void SetAddress(string Address);
+        public delegate void SetAddress(string Address, string urlStream, string[] sep);
         public event SetAddress NewAddress;
 
         public ConsoleMediaPlayer m_CMP;
@@ -18,7 +18,7 @@ namespace Radio_Player
         public Radio()
         {
             m_CMP = new ConsoleMediaPlayer(9, 2);
-            m_list = new RadioList("RadioList.txt");
+            m_list = new RadioList("RadioList.xml");
             m_Status = new Thread(m_CMP.ShowStatus);
             m_CMP.URL = m_list.GetRadio(0).UrlStream;
             m_CMP.Show();
@@ -31,6 +31,11 @@ namespace Radio_Player
             m_list.Updata();                   
         }
 
+        public void Add(string url, string title = "station")
+        {
+            m_list.Add(url, title);
+        }
+
         public void StopShow()
         {
             m_CMP.ShowAll = false; 
@@ -41,10 +46,10 @@ namespace Radio_Player
             m_CMP.Event(x, y, click);
             m_index = m_list.Event(x, y, click);
             if (m_index != -1)
-            {
+            {               
                 m_CMP.m_WMP.controls.stop();
                 m_CMP.URL = m_list.GetRadio(m_index).UrlStream;
-                NewAddress(m_list.GetRadio(m_index).WapPageAddress);
+                NewAddress(m_list.GetRadio(m_index).WepPegeAddress, m_list.GetRadio(m_index).UrlStream, m_list.GetRadio(m_index).m_siporator);
                 m_CMP.Show();
             }
             return false;

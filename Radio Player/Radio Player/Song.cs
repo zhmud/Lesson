@@ -6,6 +6,8 @@ using VkNet.Enums.Filters;
 using VkNet.Model;
 using VkNet.Enums;
 using System.Net;
+using Un4seen.Bass;
+using Un4seen.Bass.AddOn.Tags;
 
 namespace Radio_Player
 {
@@ -19,6 +21,7 @@ namespace Radio_Player
         private string m_Song = "";
         private string m_Address;
         private string[] m_Url;
+        private string m_UrlStream;
         private int m_Number = 0;
         private VkApi vk;
         private Thread download;
@@ -26,6 +29,9 @@ namespace Radio_Player
         public int m_counter = 0;
         public bool m_activ = false;
         public Tab downloadTab;
+        public string[] m_separator;
+        private DOWNLOADPROC _downloadProc_;
+        private int numberStream;
 
         public int Number
         {
@@ -33,10 +39,13 @@ namespace Radio_Player
             set { m_Number = value; }
         }
 
-        public void SetAddress(string Address)
+        public void SetAddress(string Address, string urlSream,string[] sep)
         {
             m_Address = Address;
+            m_separator = sep;
+            m_UrlStream = urlSream;
         }
+
 
         public Song(string addres)
         {
@@ -49,16 +58,24 @@ namespace Radio_Player
         }
 
         public void Go()
-        {
+        {   
             VkAuthorize();
             while (true)
             {
                 bool ok = false;
-                if (m_Address == "http://lux.fm/player/onAir.do")
-                    ok = LuxFM();
-                else
-                    ok = Tavrmedia();
-
+                try
+                {
+                    if (m_Address == "http://lux.fm/player/onAir.do")
+                        ok = LuxFM();
+                    else if (String.Compare(m_Address, "Bass") == 0)
+                        ok = Bass();
+                    else if (m_separator.Length > 0)
+                        ok = GetName();
+                }
+                catch (Exception)
+                {
+                    m_Singer = "none"; m_Song = "";
+                }
                 if (ok)
                 {
                     if (NewSong != null)
@@ -68,6 +85,23 @@ namespace Radio_Player
                 }
                 Thread.Sleep(500);
             }
+        }
+
+        private bool Bass()
+        {
+            Uri URL = new Uri(m_UrlStream);
+            TAG_INFO tags = new TAG_INFO();
+            Un4seen.Bass.Bass.BASS_StreamFree(numberStream);
+            numberStream = Un4seen.Bass.Bass.BASS_StreamCreateURL(URL.OriginalString, 0, BASSFlag.BASS_STREAM_STATUS, _downloadProc_, IntPtr.Zero);
+            Un4seen.Bass.Bass.BASS_ChannelGetTags(numberStream, BASSTag.BASS_TAG_MUSIC_MESSAGE);
+            BassTags.BASS_TAG_GetFromURL(numberStream, tags);
+            if (m_Singer != tags.artist || m_Song != tags.title)
+            {
+                m_Singer = tags.artist;
+                m_Song = tags.title;
+                return true;
+            }
+            return false;
         }
 
         public string GET_http(string url)
@@ -83,6 +117,8 @@ namespace Radio_Player
 
         private void VkAuthorize()
         {
+            BassNet.Registration("igorurievich94@gmail.com", "2X29153324152222");
+            Un4seen.Bass.Bass.BASS_Init(-1, 44100, BASSInit.BASS_DEVICE_DEFAULT, IntPtr.Zero);
             int appId = 12345; // указываем id приложения
             string email = "+380931670003"; // email для авторизации
             string password = "radioPlayer"; // пароль
@@ -149,7 +185,7 @@ namespace Radio_Player
         public void DownloadSong()
         {
             WebClient webClient = new WebClient();
-            webClient.DownloadFileAsync(new Uri(m_Url[m_Number]), "Музыка/" + m_Singer + " - " + m_Song + ".mp3");
+            webClient.DownloadFileAsync(new Uri(m_Url[m_Number]), "Music/" + m_Singer + " - " + m_Song + ".mp3");
             webClient.DownloadFileCompleted += webClient_DownloadFileCompleted;
         }
 
@@ -160,6 +196,44 @@ namespace Radio_Player
                 downloadTab.Status = 0;
                 downloadTab.Update(0);
             }
+        }
+
+        public bool GetName()
+        {
+            string htmlpage;
+            try
+            {
+                htmlpage = GET_http(m_Address);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            int indexof = htmlpage.IndexOf(m_separator[0]);
+            int lastof = htmlpage.IndexOf(m_separator[2], indexof);
+            if (lastof - indexof < 1)
+                return false;
+            string singer = htmlpage.Substring(indexof, lastof - indexof);
+            singer = System.Text.RegularExpressions.Regex.Replace(singer, @"\s+", " ");
+            singer = singer.Replace(m_separator[0], "");
+            singer = singer.Replace("\r\n", "");
+            singer = Coding(singer);
+            indexof = htmlpage.IndexOf(m_separator[1]);
+            lastof = htmlpage.IndexOf(m_separator[2], indexof + 3);
+            if (lastof - indexof < 1)
+                return false;
+            string song = htmlpage.Substring(indexof, lastof - indexof);
+            song = System.Text.RegularExpressions.Regex.Replace(song, @"\s+", " ");
+            song = song.Replace(m_separator[1], "");
+            song = song.Replace("\r\n", "");
+            song = Coding(song);
+            if (m_Singer != singer || m_Song != song)
+            {
+                m_Singer = singer;
+                m_Song = song;
+                return true;
+            } 
+            return false;
         }
 
         public bool LuxFM()
@@ -173,58 +247,23 @@ namespace Radio_Player
             {
                 return false;
             }
-            string[] separator = { "id=\"song-name\">", "</div>", "</a>" };
-           // string[] separator = { "\"singer\":\"", "\",\"song_id\"", "\",\"song\":\"", "\r\n" };
-            int indexof = htmlpage.IndexOf(separator[0]);
-            int lastof = htmlpage.IndexOf(separator[1], indexof);
-            htmlpage = htmlpage.Substring(indexof, lastof - indexof); 
+            int indexof = htmlpage.IndexOf(m_separator[0]);
+            int lastof = htmlpage.IndexOf(m_separator[1], indexof);
+            htmlpage = htmlpage.Substring(indexof, lastof - indexof);
             htmlpage = System.Text.RegularExpressions.Regex.Replace(htmlpage, @"\s+", " ");
-            htmlpage = Coding(htmlpage);
-            string[] namesong = htmlpage.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+            htmlpage = Coding(htmlpage);          
+            string[] namesong = htmlpage.Split(m_separator, StringSplitOptions.RemoveEmptyEntries);
+            if (namesong.Length < 1)
+                return false;
+            for (int i = 0; i < 2; i++)
+                if (namesong[i][0].CompareTo(' ') == 0)
+                    namesong[i] = namesong[i].Remove(0, 1);
             if (m_Singer != namesong[1] || m_Song != namesong[0])
-            {
-                m_Singer = namesong[1];
-                m_Song = namesong[0];
-                return true;
-            } 
-            return false;
-        }
-
-        public bool Tavrmedia()
-        {
-            string htmlpage;
-            try
-            {
-                htmlpage = GET_http(m_Address);
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-            string[] separators = { "\"singer\":\"", "\",\"song\":\"", "\",\"", "\r\n" };
-            int indexof = htmlpage.IndexOf(separators[0]);
-            int lastof = htmlpage.IndexOf(separators[2], indexof);
-            if (lastof - indexof < 1)
-                return false;
-            string singer = htmlpage.Substring(indexof, lastof - indexof);
-            singer = singer.Replace(separators[0], "");
-            singer = singer.Replace("\r\n", "");
-            singer = Coding(singer);
-            indexof = htmlpage.IndexOf(separators[1]);
-            lastof = htmlpage.IndexOf(separators[2], indexof + 3);
-            if (lastof - indexof < 1)
-                return false;
-            string song = htmlpage.Substring(indexof, lastof - indexof);
-            song = song.Replace(separators[1], "");
-            song = song.Replace("\r\n", "");
-            song = Coding(song);
-
-            if(m_Singer != singer || m_Song != song)
-            {
-                m_Singer = singer;
-                m_Song = song;
-                return true;
-            }        
+                {
+                    m_Singer = namesong[1];
+                    m_Song = namesong[0];
+                    return true;
+                }
             return false;
         }
         public string Coding(string str)

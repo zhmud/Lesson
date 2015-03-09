@@ -48,6 +48,7 @@ namespace Radio_Player
 
         public bool WindowShow()
         {
+            GlobalMutex.GetMutex.WaitOne();
             for (int i = 0; i < m_Height; i++)
 		    {          
                 Console.SetCursorPosition(m_Left, m_Top + i);
@@ -71,6 +72,7 @@ namespace Radio_Player
 			    }
 			    Console.WriteLine();
 		    }
+            GlobalMutex.GetMutex.ReleaseMutex();
 		    return true;
         }
     }

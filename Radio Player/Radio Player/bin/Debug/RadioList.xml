@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<RadioStation>
+  <Radio>
+    <title>Радио Люкс</title>
+    <urlStream>http://icecast.luxnet.ua/lux</urlStream>
+    <wepPageAddress>http://lux.fm/player/onAir.do</wepPageAddress>
+    <SearchTegs>
+      <Teg>id="song-name"&gt;</Teg>
+      <Teg>&lt;/div&gt;</Teg>
+      <Teg>&lt;/a&gt;</Teg>
+    </SearchTegs>
+  </Radio>
+  <Radio>
+    <title>Хит FM</title>
+    <urlStream>http://online-hitfm.tavrmedia.ua/HitFM</urlStream>
+    <wepPageAddress>http://o.tavrmedia.ua:9561/get/?k=hit</wepPageAddress>
+    <SearchTegs>
+      <Teg>"singer":"</Teg>
+      <Teg>","song":"</Teg>
+      <Teg>","</Teg>
+      <Teg>\r\n</Teg>
+    </SearchTegs>
+  </Radio>
+  <Radio>
+    <title>Kiss FM</title>
+    <urlStream>http://online-kissfm.tavrmedia.ua/KissFM</urlStream>
+    <wepPageAddress>http://o.tavrmedia.ua:9561/get/?k=kiss</wepPageAddress>
+    <SearchTegs>
+      <Teg>"singer":"</Teg>
+      <Teg>","song":"</Teg>
+      <Teg>","</Teg>
+      <Teg>\r\n</Teg>
+    </SearchTegs>
+  </Radio>
+  <Radio>
+    <title>Русское Радио</title>
+    <urlStream>http://online-rusradio.tavrmedia.ua/RusRadio</urlStream>
+    <wepPageAddress>http://o.tavrmedia.ua:9561/get/?k=russ</wepPageAddress>
+    <SearchTegs>
+      <Teg>"singer":"</Teg>
+      <Teg>","song":"</Teg>
+      <Teg>","</Teg>
+      <Teg>\r\n</Teg>
+    </SearchTegs>
+  </Radio>
+  <Radio>
+    <title>Relax FM</title>
+    <urlStream>http://online-radiorelax.tavrmedia.ua/RadioRelax</urlStream>
+    <wepPageAddress>http://o.tavrmedia.ua:9561/get/?k=relax</wepPageAddress>
+    <SearchTegs>
+      <Teg>"singer":"</Teg>
+      <Teg>","song":"</Teg>
+      <Teg>","</Teg>
+      <Teg>\r\n</Teg>
+    </SearchTegs>
+  </Radio>
+  <Radio>
+    <title>Радио Mелодия</title>
+    <urlStream>http://online-radiomelodia.tavrmedia.ua/RadioMelodia</urlStream>
+    <wepPageAddress>http://o.tavrmedia.ua:9561/get/?k=melodia</wepPageAddress>
+    <SearchTegs>
+      <Teg>"singer":"</Teg>
+      <Teg>","song":"</Teg>
+      <Teg>","</Teg>
+      <Teg>\r\n</Teg>
+    </SearchTegs>
+  </Radio>
+  <Radio>
+    <title>Radio ROKS</title>
+    <urlStream>http://online-radioroks.tavrmedia.ua/RadioROKS</urlStream>
+    <wepPageAddress>http://o.tavrmedia.ua:9561/get/?k=roks</wepPageAddress>
+    <SearchTegs>
+      <Teg>"singer":"</Teg>
+      <Teg>","song":"</Teg>
+      <Teg>","</Teg>
+      <Teg>\r\n</Teg>
+    </SearchTegs>
+  </Radio>
+  <Radio>
+    <title>Авто Радио</title>
+    <urlStream>http://cast.avtoradio.ua/avtoradio</urlStream>
+    <wepPageAddress>Bass</wepPageAddress>
+  </Radio>
+  <Radio>
+    <title>Europa Plus</title>
+    <urlStream>http://cast.radiogroup.com.ua:8000/europaplus</urlStream>
+    <wepPageAddress>Bass</wepPageAddress>
+  </Radio>
+  <Radio>
+    <title>РЕТРО FM</title>
+    <urlStream>http://cast.radiogroup.com.ua:8000/retro</urlStream>
+    <wepPageAddress>Bass</wepPageAddress>
+  </Radio>
+  <Radio>
+    <title>Наше радио</title>
+    <urlStream>http://cast.nashe.ua/nashe</urlStream>
+    <wepPageAddress>Bass</wepPageAddress>
+  </Radio>
+  <Radio>
+    <title>ДжемFM</title>
+    <urlStream>http://cast.jamfm.com.ua/jamfm</urlStream>
+    <wepPageAddress>Bass</wepPageAddress>
+  </Radio>
+  <Radio>
+    <title>Lounge FM</title>
+    <urlStream>http://cast.loungefm.com.ua/loungefm</urlStream>
+    <wepPageAddress>Bass</wepPageAddress>
+  </Radio>
+  <Radio>
+    <title>Львівська хвиля</title>
+    <urlStream>http://ua.uar.net:8000/lwr</urlStream>
+  </Radio>
+</RadioStation>

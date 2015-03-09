@@ -33,6 +33,7 @@ namespace Radio_Player
 
         public void Update(ModeButton mode = ModeButton.Normal)
         {
+            GlobalMutex.GetMutex.WaitOne();
             Console.ForegroundColor = ConsoleColor.Black;         
             if (mode == ModeButton.Normal)
                 Console.BackgroundColor = ConsoleColor.DarkYellow;
@@ -44,6 +45,7 @@ namespace Radio_Player
             Console.Write(" " + m_titles + " ");
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.BackgroundColor = ConsoleColor.Black;
+            GlobalMutex.GetMutex.ReleaseMutex();
         }
 
         public bool Event(int x, int y, int click = 4)

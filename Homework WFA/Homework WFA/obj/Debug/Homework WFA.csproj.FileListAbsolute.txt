@@ -1,0 +1,12 @@
+c:\users\женя\documents\visual studio 2013\Projects\C#\Homework WFA\Homework WFA\bin\Debug\Homework WFA.exe.config
+c:\users\женя\documents\visual studio 2013\Projects\C#\Homework WFA\Homework WFA\bin\Debug\Homework WFA.exe
+c:\users\женя\documents\visual studio 2013\Projects\C#\Homework WFA\Homework WFA\bin\Debug\Homework WFA.pdb
+c:\users\женя\documents\visual studio 2013\Projects\C#\Homework WFA\Homework WFA\obj\Debug\Homework WFA.csprojResolveAssemblyReference.cache
+c:\users\женя\documents\visual studio 2013\Projects\C#\Homework WFA\Homework WFA\obj\Debug\Homework_WFA.Form1.resources
+c:\users\женя\documents\visual studio 2013\Projects\C#\Homework WFA\Homework WFA\obj\Debug\Homework_WFA.Properties.Resources.resources
+c:\users\женя\documents\visual studio 2013\Projects\C#\Homework WFA\Homework WFA\obj\Debug\Homework WFA.csproj.GenerateResource.Cache
+c:\users\женя\documents\visual studio 2013\Projects\C#\Homework WFA\Homework WFA\obj\Debug\Homework WFA.exe
+c:\users\женя\documents\visual studio 2013\Projects\C#\Homework WFA\Homework WFA\obj\Debug\Homework WFA.pdb
+C:\Users\Женя\Documents\GitHub\Lesson\Homework WFA\Homework WFA\bin\Debug\Homework WFA.exe.config
+C:\Users\Женя\Documents\GitHub\Lesson\Homework WFA\Homework WFA\obj\Debug\Homework WFA.exe
+C:\Users\Женя\Documents\GitHub\Lesson\Homework WFA\Homework WFA\obj\Debug\Homework WFA.pdb

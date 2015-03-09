@@ -14,3 +14,4 @@ C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\bin\Release\
 C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\obj\Release\Radio Player.csprojResolveAssemblyReference.cache
 C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\obj\Release\Radio Player.exe
 C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\obj\Release\Radio Player.pdb
+C:\Users\Женя\Documents\GitHub\Lesson\Radio Player\Radio Player\bin\Release\Bass.Net.dll

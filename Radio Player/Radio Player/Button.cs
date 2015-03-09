@@ -36,6 +36,7 @@ namespace Radio_Player
 
         public void Show(ModeButton Mode = ModeButton.Normal)
         {
+            GlobalMutex.GetMutex.WaitOne();
             if (Mode == ModeButton.Normal)
                 Console.ForegroundColor = ConsoleColor.White;
             else if (Mode == ModeButton.Move)
@@ -51,6 +52,7 @@ namespace Radio_Player
 
             Console.ForegroundColor = ConsoleColor.White;
             Console.BackgroundColor = ConsoleColor.Black;
+            GlobalMutex.GetMutex.ReleaseMutex();
         }
         public bool Event(int x, int y, int click = 4)
         {

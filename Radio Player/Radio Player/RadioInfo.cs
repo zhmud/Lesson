@@ -10,8 +10,9 @@ namespace Radio_Player
     {
         private string m_title;
         private string m_urlStream;
-        private string m_wapPageAddress;
+        private string m_wepPageAddress;
         private int m_status = 0; // 0 - normal, 1 - move, 2 - click
+        public string[] m_siporator;
         private Thread t;
         private Random r;
 
@@ -27,10 +28,10 @@ namespace Radio_Player
             set { m_urlStream = value; }
         }
 
-        public string WapPageAddress
+        public string WepPegeAddress
         {
-            get { return m_wapPageAddress; }
-            set { m_wapPageAddress = value; }
+            get { return m_wepPageAddress; }
+            set { m_wepPageAddress = value; }
         }
 
         public int Status
@@ -56,11 +57,12 @@ namespace Radio_Player
             Height = 3;
             t = new Thread(Raduga);
             r = new Random();
-           // t.Start();
+          //  t.Start();
         }
 
         public void Show(ModeButton Mode = ModeButton.Normal)
         {
+            GlobalMutex.GetMutex.WaitOne();
             if (Mode == ModeButton.Normal)
             {
                 Console.ForegroundColor = ConsoleColor.White;
@@ -78,12 +80,18 @@ namespace Radio_Player
                 m_status = 2;
             }
             WindowShow();
+            if (Mode == ModeButton.Move)
+            {
+                Console.SetCursorPosition(Left + Width - 1, Top);
+                Console.Write('x');
+            }
             int space = (20 - m_title.Length) / 2;
             Console.SetCursorPosition(Left + 1 + space, Top + 1);
             Console.WriteLine(m_title);
 
             Console.ForegroundColor = ConsoleColor.White;
             Console.BackgroundColor = ConsoleColor.Black;
+            GlobalMutex.GetMutex.ReleaseMutex();
         }
         public void Raduga()
         {
